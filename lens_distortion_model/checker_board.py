@@ -20,9 +20,9 @@ def generate_checkerboard(width, height, square_size):
     draw.ellipse((center_x - radius, center_y - radius, center_x + radius, center_y + radius), fill='red')
     
     # Add reference points
-    reference_points = [(100, 100), (width - 100, 100), (width - 100, height - 100), (100, height - 100)]
-    for point in reference_points:
-        draw.ellipse((point[0] - 5, point[1] - 5, point[0] + 5, point[1] + 5), fill='blue')
+    #reference_points = [(100, 100), (width - 100, 100), (width - 100, height - 100), (100, height - 100)]
+    #for point in reference_points:
+        #draw.ellipse((point[0] - 5, point[1] - 5, point[0] + 5, point[1] + 5), fill='blue')
     
     # Add squares
     square_sizes = [1000, 2000, 3000]
