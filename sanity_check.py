@@ -6,7 +6,7 @@ image_width = 500
 
 #create a list of image co-ords evenly spaced across the image
 image_co_ords = []
-num_points = 20
+num_points = 50
 
 for i in range(num_points):
     for j in range(num_points):
@@ -44,8 +44,26 @@ for coords in image_co_ords:
     k3 = 0.01
 
     # Apply distortion model - 3 parameter distortion model
-    nx_distorted = nx * (1 + k1 * r2)
-    ny_distorted = ny * (1 + k1 * r2)
+    stage_1_x = nx * (1 + k1 * r2)
+    stage_1_y = ny * (1 + k1 * r2)
+
+    stage_2_x = nx * (1 + k1 * r2 + k2 * r4)
+    stage_2_y = ny * (1 + k1 * r2 + k2 * r4)
+
+    stage_3_x = nx * (1 + k1 * r2 + k2 * r4 + k3 * r6)
+    stage_3_y = ny * (1 + k1 * r2 + k2 * r4 + k3 * r6)
+
+    stage_1_dn_x = stage_1_x * cx + cx + offset
+    stage_1_dn_y = stage_1_y * cy + cy + offset
+
+    stage_2_dn_x = stage_2_x * cx + cx + offset
+    stage_2_dn_y = stage_2_y * cy + cy + offset
+
+    stage_3_dn_x = stage_3_x * cx + cx + offset
+    stage_3_dn_y = stage_3_y * cy + cy + offset
+
+    nx_distorted = nx * (1 + k1 * r2 + k2 * r4 + k3 * r6)
+    ny_distorted = ny * (1 + k1 * r2 + k2 * r4 + k3 * r6)
 
     x_dn = nx_distorted *cx + cx 
     y_dn = ny_distorted *cy + cy 
@@ -79,10 +97,15 @@ for coords in image_co_ords:
     cy_offset = cy + offset
 
     #draw the vector lines from the orginal points to the distorted points
-    cv2.line(blank_image, (int(x_offset), int(y_offset)), (int(x_dn_offset), int(y_dn_offset)), (0,255,0), 1)
+    #cv2.line(blank_image, (int(x_offset), int(y_offset)), (int(x_dn_offset), int(y_dn_offset)), (0,255,0), 1)
 
-    #draw the concentric circles for r2 r4 and r6
-    cv2.circle(blank_image, (int(x_offset), int(y_offset)), int(r2*10), (255,0,0), 1)
+    #plot stage 1dn, 2dn and 3dn on the image
+    cv2.circle(blank_image, (int(stage_1_dn_x), int(stage_1_dn_y)), 1, (0,0,255), -1)
+    cv2.circle(blank_image, (int(stage_2_dn_x), int(stage_2_dn_y)), 1, (0,0,255), -1)
+    cv2.circle(blank_image, (int(stage_3_dn_x), int(stage_3_dn_y)), 1, (0,0,255), -1)
+
+    #draw the concentric circles for r2 
+    cv2.circle(blank_image, (int(x_offset), int(y_offset)), int((r2*10)), (255,0,0), 1)
     
     #cv2.line(blank_image, (int(cx_offset), int(cy_offset)), (int(x_offset), int(y_offset)), (255,255,255), 1)
 
