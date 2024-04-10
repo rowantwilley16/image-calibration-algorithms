@@ -1,15 +1,16 @@
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
-image_height = 500
-image_width = 500
+image_height    = 500
+image_width     = 500
 
 #create a list of image co-ords evenly spaced across the image
 image_co_ords = []
-num_points = 50
+num_points = 20
 
 for i in range(num_points):
-    for j in range(num_points):
+    for j in range(num_points-1):
         x = (i + 0.5) * (image_width / num_points)
         y = (j + 0.5) * (image_height / num_points)
         image_co_ords.append([x, y])
@@ -20,10 +21,15 @@ for i in range(num_points):
 cx = image_width//2
 cy = image_height//2
 
-#plot the original points a blank image
-blank_image = np.zeros((image_width*2,image_height*2,3), np.uint8)
+offset = image_width//2
 
-offset = 250
+#plot the original points a blank image
+blank_image = np.zeros((int(image_width*2),int(image_height*2),3), np.uint8)
+
+plt.figure(figsize=(8, 8))
+plt.imshow(blank_image)
+plt.title('Original and Distorted Points')
+
 
 for coords in image_co_ords:
     x = coords[0]
@@ -83,7 +89,7 @@ for coords in image_co_ords:
     print("\n\n")
 
     #make an empty list for dn co-ords
-    dn_coords = []
+    dn_coords       = []
     original_coords = []
 
     #append the dn co-ords in tuple pairs 
@@ -93,25 +99,45 @@ for coords in image_co_ords:
     x_dn_offset = x_dn + offset
     y_dn_offset = y_dn + offset
 
-    cx_offset = cx + offset
-    cy_offset = cy + offset
+    cx_offset   = cx + offset
+    cy_offset   = cy + offset
 
     #draw the vector lines from the orginal points to the distorted points
     #cv2.line(blank_image, (int(x_offset), int(y_offset)), (int(x_dn_offset), int(y_dn_offset)), (0,255,0), 1)
 
+    #color is BGR
+    stage_1_color = (0,0,255)
+    stage_2_color = (255,0,0)
+    stage_3_color = (0,255,0)
+
     #plot stage 1dn, 2dn and 3dn on the image
-    cv2.circle(blank_image, (int(stage_1_dn_x), int(stage_1_dn_y)), 1, (0,0,255), -1)
-    cv2.circle(blank_image, (int(stage_2_dn_x), int(stage_2_dn_y)), 1, (0,0,255), -1)
-    cv2.circle(blank_image, (int(stage_3_dn_x), int(stage_3_dn_y)), 1, (0,0,255), -1)
+    cv2.circle(blank_image, (int(stage_1_dn_x), int(stage_1_dn_y)), 1, stage_1_color, -1)
+    cv2.circle(blank_image, (int(stage_2_dn_x), int(stage_2_dn_y)), 1, stage_2_color, -1)
+    cv2.circle(blank_image, (int(stage_3_dn_x), int(stage_3_dn_y)), 1, stage_3_color, -1)
+
+    #draw vector lines from original points to distorted points
+
+    cv2.line(blank_image, (int(x_offset), int(y_offset)), (int(stage_1_dn_x), int(stage_1_dn_y)), stage_1_color, 1)
+    cv2.line(blank_image, (int(stage_1_dn_x), int(stage_1_dn_y)), (int(stage_2_dn_x), int(stage_2_dn_y)), stage_2_color, 1)
+    cv2.line(blank_image, (int(stage_2_dn_x), int(stage_2_dn_y)), (int(stage_3_dn_x), int(stage_3_dn_y)), stage_3_color, 1)
 
     #draw the concentric circles for r2 
-    cv2.circle(blank_image, (int(x_offset), int(y_offset)), int((r2*10)), (255,0,0), 1)
+    #cv2.circle(blank_image, (int(x_offset), int(y_offset)), int((r2*10)), (0,255,255), 1)
     
     #cv2.line(blank_image, (int(cx_offset), int(cy_offset)), (int(x_offset), int(y_offset)), (255,255,255), 1)
 
-    cv2.circle(blank_image, (int(cx_offset), int(cy_offset)), 1, (255,0,255), -1)
-    cv2.circle(blank_image, (int(x_offset), int(y_offset)), 1, (255,255,255), -1)
-    cv2.circle(blank_image, (int(x_dn_offset), int(y_dn_offset)), 1, (0,255,255), -1)
+    cv2.circle(blank_image, (int(cx_offset),    int(cy_offset)), 1, (255,0,255),   -1)
+    cv2.circle(blank_image, (int(x_offset),     int(y_offset)) , 1, (255,255,255), -1)
+    #cv2.circle(blank_image, (int(x_dn_offset), int(y_dn_offset)), 1, (0,255,255), -1)
+
+    plt.plot([x + offset, x_dn + offset], [y + offset, y_dn + offset], color='blue')
+    plt.plot(x + offset, y + offset, '.')  # Original points
+    plt.plot(x_dn + offset, y_dn + offset, 'x')  # Distorted points
+
+    
+
+plt.gca().invert_yaxis()  # Invert y-axis to match the image coordinate system
+plt.show()
 
 cv2.imshow("Original Points", blank_image)
 cv2.waitKey(0)
