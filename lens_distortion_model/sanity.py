@@ -33,10 +33,6 @@ print("distorted_img\n", distorted_img)
 #save the distorted image array to a text file with tabs between the values 
 np.savetxt("distorted_image.txt", distorted_img, fmt='%d', delimiter='\t')
 
-
-
-
-
 tdi = np.sum(distorted_img[TDI_start_line:TDI_current_output_line, :], axis=0)
 #print("test_img\n", test_img)
 

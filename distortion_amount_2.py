@@ -47,8 +47,8 @@ def plot_distortion(radius, distortion_amount):
 
 def main():
     # Load reference and distorted images
-    ref_img = cv2.imread(r"C:\Users\rowan\Documents\masters\sw_comparison\lens_distortion_model\source_images\checkerboard_dots_squares.png")
-    distorted_img = cv2.imread(r"C:\Users\rowan\Documents\masters\sw_comparison\lens_distortion_model\output_images\checkerboard_dots_squares_distorted.png")
+    ref_img         = cv2.imread(r"C:\Users\rowan\Documents\masters\sw_comparison\lens_distortion_model\source_images\checkerboard_dots_squares.png")
+    distorted_img   = cv2.imread(r"C:\Users\rowan\Documents\masters\sw_comparison\lens_distortion_model\output_images\checkerboard_dots_squares_distorted.png")
 
     # Brown-Conrady distortion parameters
     k1 = 0.001

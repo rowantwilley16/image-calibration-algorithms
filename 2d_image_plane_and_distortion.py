@@ -7,7 +7,7 @@ image_width     = 500
 
 #create a list of image co-ords evenly spaced across the image
 image_co_ords = []
-num_points = 20
+num_points = 25
 
 for i in range(num_points):
     for j in range(num_points-1):
@@ -17,7 +17,7 @@ for i in range(num_points):
 
     #image_co_ords = np.array([[0,0],[0,image_height],[image_width,0],[image_width,image_height]], dtype=np.float32)
 
-# center of the image
+# center of the image   
 cx = image_width//2
 cy = image_height//2
 
@@ -26,10 +26,12 @@ offset = image_width//2
 #plot the original points a blank image
 blank_image = np.zeros((int(image_width*2),int(image_height*2),3), np.uint8)
 
-plt.figure(figsize=(8, 8))
-plt.imshow(blank_image)
-plt.title('Original and Distorted Points')
+#make all the pixels in the blank image 255
+blank_image.fill(255)
 
+#plt.figure(figsize=(8, 8))
+#plt.imshow(blank_image)
+#plt.title('Original and Distorted Points')
 
 for coords in image_co_ords:
     x = coords[0]
@@ -106,38 +108,41 @@ for coords in image_co_ords:
     #cv2.line(blank_image, (int(x_offset), int(y_offset)), (int(x_dn_offset), int(y_dn_offset)), (0,255,0), 1)
 
     #color is BGR
-    stage_1_color = (0,0,255)
-    stage_2_color = (255,0,0)
-    stage_3_color = (0,255,0)
+    stage_1_color = (0,100,255) #orange 
+    stage_2_color = (50,150,50) #green
+    stage_3_color = (200,50,0) 
 
     #plot stage 1dn, 2dn and 3dn on the image
-    cv2.circle(blank_image, (int(stage_1_dn_x), int(stage_1_dn_y)), 1, stage_1_color, -1)
-    cv2.circle(blank_image, (int(stage_2_dn_x), int(stage_2_dn_y)), 1, stage_2_color, -1)
+    #cv2.circle(blank_image, (int(stage_1_dn_x), int(stage_1_dn_y)), 1, stage_1_color, -1)
+    #cv2.circle(blank_image, (int(stage_2_dn_x), int(stage_2_dn_y)), 1, stage_2_color, -1)
     cv2.circle(blank_image, (int(stage_3_dn_x), int(stage_3_dn_y)), 1, stage_3_color, -1)
 
     #draw vector lines from original points to distorted points
 
-    cv2.line(blank_image, (int(x_offset), int(y_offset)), (int(stage_1_dn_x), int(stage_1_dn_y)), stage_1_color, 1)
-    cv2.line(blank_image, (int(stage_1_dn_x), int(stage_1_dn_y)), (int(stage_2_dn_x), int(stage_2_dn_y)), stage_2_color, 1)
-    cv2.line(blank_image, (int(stage_2_dn_x), int(stage_2_dn_y)), (int(stage_3_dn_x), int(stage_3_dn_y)), stage_3_color, 1)
+    #cv2.line(blank_image, (int(x_offset), int(y_offset)), (int(stage_1_dn_x), int(stage_1_dn_y)), stage_1_color, 1)
+    #cv2.line(blank_image, (int(stage_1_dn_x), int(stage_1_dn_y)), (int(stage_2_dn_x), int(stage_2_dn_y)), stage_2_color, 1)
+    #cv2.line(blank_image, (int(stage_2_dn_x), int(stage_2_dn_y)), (int(stage_3_dn_x), int(stage_3_dn_y)), stage_3_color, 1)
 
     #draw the concentric circles for r2 
     #cv2.circle(blank_image, (int(x_offset), int(y_offset)), int((r2*10)), (0,255,255), 1)
     
     #cv2.line(blank_image, (int(cx_offset), int(cy_offset)), (int(x_offset), int(y_offset)), (255,255,255), 1)
 
-    cv2.circle(blank_image, (int(cx_offset),    int(cy_offset)), 1, (255,0,255),   -1)
-    cv2.circle(blank_image, (int(x_offset),     int(y_offset)) , 1, (255,255,255), -1)
+    cv2.circle(blank_image, (int(cx_offset),    int(cy_offset)), 2, (0,0,255),   -1)
+    cv2.circle(blank_image, (int(x_offset),     int(y_offset)) , 1, (0,0,0), -1)
+    #plot the vector line from original to final point 
+    cv2.line(blank_image, (int(x_offset), int(y_offset)), (int(x_dn_offset), int(y_dn_offset)), (100,0,255), 1)
     #cv2.circle(blank_image, (int(x_dn_offset), int(y_dn_offset)), 1, (0,255,255), -1)
 
-    plt.plot([x + offset, x_dn + offset], [y + offset, y_dn + offset], color='blue')
-    plt.plot(x + offset, y + offset, '.')  # Original points
-    plt.plot(x_dn + offset, y_dn + offset, 'x')  # Distorted points
+    #plt.plot([x + offset, x_dn + offset], [y + offset, y_dn + offset], color='blue')
+    #plt.plot(x + offset, y + offset, '.')  # Original points
+    #plt.plot(x_dn + offset, y_dn + offset, 'x')  # Distorted points
 
-    
+#plt.gca().invert_yaxis()  # Invert y-axis to match the image coordinate system
+#plt.show()
 
-plt.gca().invert_yaxis()  # Invert y-axis to match the image coordinate system
-plt.show()
+#write the cv2 image to pdf file
+cv2.imwrite("distortion_stages.png", blank_image)
 
 cv2.imshow("Original Points", blank_image)
 cv2.waitKey(0)
