@@ -12,8 +12,8 @@ debug = 2
 def main():
 
     #set the image size
-    image_height    = 25
-    image_width     = 25
+    image_height    = 50
+    image_width     = 50
 
     x, y = np.meshgrid(np.arange(image_width), np.arange(image_height))
 
