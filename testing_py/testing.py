@@ -12,8 +12,8 @@ debug = 2
 def main():
 
     #set the image size
-    image_height    = 50
-    image_width     = 50
+    image_height    = 5
+    image_width     = 5
 
     x, y = np.meshgrid(np.arange(image_width), np.arange(image_height))
 
@@ -60,7 +60,7 @@ def debug_level_one(cx,cy,k1,nx,ny,r2,dist_nx,dist_ny,x2,y2):
 
     #print the distorted coordinates
     print("dist_nx : \n", dist_nx)
-    print("ddist_ny : \n", dist_ny)
+    print("dist_ny : \n", dist_ny)
     
     #print the new image coordinates
     print("x2 : \n", x2)
@@ -85,6 +85,12 @@ def debug_level_two(cx,cy,k1,nx,ny,r2,dist_nx,dist_ny,x2,y2):
     #save the distorted coordinates to a textfiles
     np.savetxt("testing_py/dist_nx_values.txt", dist_nx, fmt="%f")
     np.savetxt("testing_py/dist_ny_values.txt", dist_ny, fmt="%f")
+
+    #save the x2 and y2 values to a textfile
+    np.savetxt("testing_py/x2_values.txt", x2, fmt="%f")
+    np.savetxt("testing_py/y2_values.txt", y2, fmt="%f")
+    
+    
 
 if __name__ == "__main__":
     main()
