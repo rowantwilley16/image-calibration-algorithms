@@ -30,8 +30,8 @@ for i in range(300):
     #res3[i,:] = np.sum(distorted_img[200:, :], axis=0)/300
 
 # show result as 2x upscaled image
-#cv2.imshow("res", cv2.resize(res/np.amax(res), (200, 200), interpolation=cv2.INTER_NEAREST))
-#cv2.waitKey(0)
+cv2.imshow("res", cv2.resize(res/np.amax(res), (200, 200), interpolation=cv2.INTER_NEAREST))
+cv2.waitKey(0)
 
 cv2.imshow("res", cv2.resize(test_img/np.amax(res), (300,300), interpolation=cv2.INTER_NEAREST))
 cv2.waitKey(0)
@@ -77,7 +77,7 @@ print(np.sqrt(np.mean((norm_test - norm_corr)**2)))
 
 out_image = np.zeros((800, 300, 3))
 
-img = cv2.imread("test.png")
+img = cv2.imread(r"C:\Users\rowan\OneDrive\Desktop\ref_sat_img_1.jpg")
 
 for offset in range(800-300-1):
     # read test.png into numpy array RGB
@@ -86,7 +86,7 @@ for offset in range(800-300-1):
     crop = img[offset:offset+300, :, :]
 
     # distort this
-    distorted_img = cv2.remap(crop, x2.astype(np.float32), y2.astype(np.float32), cv2.INTER_LINEAR)
+    distorted_img = cv2.remap(crop, x2.astype(np.float32), y2.astype(np.float32), interpolation=cv2.INTER_LANCZOS4)
 
     # isolate red in top 1/3, green in middle, blue in bottom with vstack as if using filters in a scanning sattelite
     distorted_img[:100,:,1:] = 0

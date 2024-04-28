@@ -90,6 +90,9 @@ def debug_level_two(cx,cy,k1,nx,ny,r2,dist_nx,dist_ny,x2,y2):
     np.savetxt("testing_py/x2_values.txt", x2, fmt="%f")
     np.savetxt("testing_py/y2_values.txt", y2, fmt="%f")
     
+    np.savetxt("testing_py/x2_values_rounded.txt", np.around(x2), fmt="%f")
+    np.savetxt("testing_py/y2_values_rounded.txt", np.around(y2), fmt="%f")
+
     
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ rectangle_size = 5
 
 #create a list of image co-ords evenly spaced across the image
 image_co_ords = []
-num_points = 30
+num_points = 25
 
 for i in range(num_points):
     for j in range(num_points-1):
@@ -135,11 +135,11 @@ for coords in image_co_ords:
 
     #draw small squares at each orgirnal and final point 
 
-    cv2.rectangle(blank_image, (int(x_offset)-rectangle_size, int(y_offset)-rectangle_size), (int(x_offset)+rectangle_size, int(y_offset)+rectangle_size), (185,185,255), -1)
-    cv2.rectangle(blank_image, (int(x_dn_offset)-rectangle_size, int(y_dn_offset)-rectangle_size), (int(x_dn_offset)+rectangle_size, int(y_dn_offset)+rectangle_size), (0,0,0), 1)
+    cv2.rectangle(blank_image, (int(x_offset)-rectangle_size, int(y_offset)-rectangle_size), (int(x_offset)+rectangle_size, int(y_offset)+rectangle_size), (100,185,255), -1)
+    cv2.rectangle(blank_image, (int(x_dn_offset)-rectangle_size, int(y_dn_offset)-rectangle_size), (int(x_dn_offset)+ rectangle_size, int(y_dn_offset)+rectangle_size), (100,50,50), -1)
 
     #plot the vector line from original to final point 
-    cv2.line(blank_image, (int(x_offset), int(y_offset)), (int(x_dn_offset), int(y_dn_offset)), (100,0,255), 1)
+    cv2.line(blank_image, (int(x_offset), int(y_offset)), (int(x_dn_offset), int(y_dn_offset)), (100,0,200), 2)
     #cv2.circle(blank_image, (int(x_dn_offset), int(y_dn_offset)), 1, (0,255,255), -1)
 
     #plt.plot([x + offset, x_dn + offset], [y + offset, y_dn + offset], color='blue')
