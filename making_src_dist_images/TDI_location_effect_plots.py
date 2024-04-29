@@ -1,7 +1,7 @@
 import numpy as np 
 import cv2
 import matplotlib.pyplot as plt
-from matplotlib import cm
+from matplotlib import cm # for the color maps
 import math 
 
 image_width     = 4000
