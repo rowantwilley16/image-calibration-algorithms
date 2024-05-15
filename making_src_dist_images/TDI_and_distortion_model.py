@@ -2,13 +2,22 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
+#fig_width,fig_height = 6,3.3
+plt.rcParams['font.family'] = 'Serif'
+plt.rcParams['axes.labelsize']     = 12
+plt.rcParams['axes.titlesize']     = 12
+plt.rcParams['font.size']          = 12
+plt.rcParams['legend.fontsize']    = 12
+plt.rcParams['xtick.labelsize']    = 12
+plt.rcParams['ytick.labelsize']    = 12
+
 image_width     = 4000
 image_height    = 4000
 
 cx = image_width//2
 cy = image_height//2
 
-k1 = 0.1
+k1 = -0.1
 TDI_stages = 4
 TDI_start_line = 0
 TDI_current_output_line = TDI_start_line + TDI_stages
@@ -168,26 +177,6 @@ plt.plot(M_vector_x_window_red[0,:], label = "M vector x red")
 plt.legend()
 plt.grid()
 plt.show()
-
-
-plot_size_flag = False
-
-if plot_size_flag: 
-    print("nx_window_blue size: "   , nx_window_blue.shape)
-    print("nx_window_green size: "  , nx_window_green.shape)
-    print("nx_window_red size: "    , nx_window_red.shape)
-
-    print("nx_window_blue: "    , nx_window_blue)
-    print("nx_window_green: "   , nx_window_green)
-    print("nx_window_red: "     , nx_window_red)
-
-    print("M_vector_window_blue size: "   , M_vector_window_blue.shape)
-    print("M_vector_window_green size: "  , M_vector_window_green.shape)
-    print("M_vector_window_red size: "    , M_vector_window_red.shape)
-
-    print("M_vector_window_blue: "    , M_vector_window_blue)
-    print("M_vector_window_green: "   , M_vector_window_green)
-    print("M_vector_window_red: "     , M_vector_window_red)
 
 
 

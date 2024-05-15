@@ -1,5 +1,6 @@
 from PIL import Image, ImageDraw
 import matplotlib.pyplot as plt
+
 def generate_checkerboard(width, height, square_size):
     img = Image.new('RGB', (width, height), color='white')
     pixels = img.load()
@@ -32,13 +33,13 @@ def generate_checkerboard(width, height, square_size):
     
     
     
-    img.save(r"C:\Users\rowan\Documents\masters\sw_comparison\lens_distortion_model\source_images\checkerboard_dots_squares.png")
+    img.save(r"C:\Users\rowan\OneDrive\Desktop\code\image-calibration-algorithms\lens_distortion_correction_process\input_images\checkerboard.jpg")
     return img
 
 if __name__ == "__main__":
-    width = 4000
-    height = 4000
-    square_size = 100  # Adjust the square size as needed
+    width = 200
+    height = 200
+    square_size = 20 # Adjust the square size as needed
     checkerboard_img = generate_checkerboard(width, height, square_size)
     print("GENERATED : Checkerboard_with_dot_reference_points_and_squares.png ")
     plt.imshow(checkerboard_img)
